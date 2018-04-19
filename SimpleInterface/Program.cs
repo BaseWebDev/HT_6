@@ -9,13 +9,13 @@ namespace SimpleInterface {
         //    shapes.Add(new WhitePoint(10, 10));
         //    shapes.Add(new AniStar(34, 10, ConsoleColor.Green));
         //    shapes.Add(new MoveableStar(12, 20, ConsoleColor.Red));
-            shapes.Add(new FigurT(5,15,ConsoleColor.Yellow));
-            shapes.Add(new FigurQ(5, 10, ConsoleColor.Yellow));
-            shapes.Add(new FigurI(0, 0, ConsoleColor.Yellow));
-            shapes.Add(new FigurZ(2, 0, ConsoleColor.Yellow));
-            shapes.Add(new FigurS(6, 0, ConsoleColor.Yellow));
-            shapes.Add(new FigurJ(9, 0, ConsoleColor.Yellow));
-            shapes.Add(new FigurL(15, 0, ConsoleColor.Yellow));
+            shapes.Add(new FigurT(20,1,ConsoleColor.Yellow));
+            shapes.Add(new FigurQ(20, 4, ConsoleColor.Yellow));
+            shapes.Add(new FigurI(20, 4, ConsoleColor.Yellow));
+            shapes.Add(new FigurZ(20, 4, ConsoleColor.Yellow));
+            shapes.Add(new FigurS(20, 4, ConsoleColor.Yellow));
+            shapes.Add(new FigurJ(20, 4, ConsoleColor.Yellow));
+            shapes.Add(new FigurL(20, 4, ConsoleColor.Yellow));
 
             var engine = new Render();
             engine.Draw(shapes);
@@ -32,6 +32,7 @@ namespace SimpleInterface {
     }
 
     class Render : IRender {
+        const int maxY= 20;
         public int Frame { get; private set; }
         /// <summary>
         /// Нажатая клавиша
@@ -40,22 +41,43 @@ namespace SimpleInterface {
         private void PrepareEnv() {
             Console.CursorVisible = false;
         }
+        /// <summary>
+        /// Движение фигуры вниз с постоянной скоростью
+        /// </summary>
+        public bool VertMove(IShape shape) {
+            if (shape.Y < maxY) {
+                ++shape.Y;
+                return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// Движение фигуры в право и лево
+        /// </summary>
+        /// <param name="key">Нажатая клавиша</param>
+        public void HorizMove(IShape shape, ConsoleKey key) {
+            if (key == ConsoleKey.LeftArrow) {
+                --shape.X;
+            } else if (key == ConsoleKey.RightArrow) {
+                ++shape.X;
+            }
+        }
         public void Draw(IEnumerable<IShape> shapes) {
             this.PrepareEnv();
-            while (true) {
-                // this.Keystroke = Console.ReadKey(true).Key;
-               // while (Keystroke.Key != ConsoleKey.LeftArrow) {
-                    foreach (var shape in shapes) {
-                        shape.Draw(this);
+            foreach (var shape in shapes) {
+                while (true) {
+                    shape.Draw(this);
+                    if (!VertMove(shape)) {
+                        break;
                     }
                     Wait();
                     Clear();
-
                     this.Frame++;
                     if (Console.KeyAvailable == true) {
                         Keystroke = Console.ReadKey(true).Key;
                     }
-               // }
+                    // }
+                }
             }
         }
         private void Wait() {
@@ -92,9 +114,6 @@ namespace SimpleInterface {
             } else if (key == ConsoleKey.RightArrow) {
                 ++this.X;
             }
-        }
-        public void VertMove(ConsoleKey key) {
-            ++this.Y;
         }
     }
     
