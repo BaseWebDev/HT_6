@@ -6,9 +6,9 @@ namespace SimpleInterface {
     class Program {
         static void Main(string[] args) {
             var shapes = new List<IShape>();
-            shapes.Add(new WhitePoint(10, 10));
-            shapes.Add(new AniStar(34, 10, ConsoleColor.Green));
-            shapes.Add(new MoveableStar(12, 20, ConsoleColor.Red));
+        //    shapes.Add(new WhitePoint(10, 10));
+        //    shapes.Add(new AniStar(34, 10, ConsoleColor.Green));
+        //    shapes.Add(new MoveableStar(12, 20, ConsoleColor.Red));
             shapes.Add(new FigurT(5,15,ConsoleColor.Yellow));
             shapes.Add(new FigurQ(5, 10, ConsoleColor.Yellow));
             shapes.Add(new FigurI(0, 0, ConsoleColor.Yellow));
@@ -32,18 +32,29 @@ namespace SimpleInterface {
 
     class Render : IRender {
         public int Frame { get; private set; }
+        /// <summary>
+        /// Нажатая клавиша
+        /// </summary>
+        public ConsoleKeyInfo Keystroke { get; private set; }
         private void PrepareEnv() {
             Console.CursorVisible = false;
         }
         public void Draw(IEnumerable<IShape> shapes) {
             this.PrepareEnv();
             while (true) {
-                foreach (var shape in shapes) {
-                    shape.Draw(this);
-                }
-                Wait();
-                Clear();
-                this.Frame++;
+                // this.Keystroke = Console.ReadKey(true).Key;
+               // while (Keystroke.Key != ConsoleKey.LeftArrow) {
+                    foreach (var shape in shapes) {
+                        shape.Draw(this);
+                    }
+                    Wait();
+                    Clear();
+
+                    this.Frame++;
+                    if (Console.KeyAvailable == true) {
+                        Keystroke = Console.ReadKey(true);
+                    }
+               // }
             }
         }
         private void Wait() {
