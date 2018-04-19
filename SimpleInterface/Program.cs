@@ -28,6 +28,7 @@ namespace SimpleInterface {
         void Draw(IEnumerable<IShape> shapes);
         void SetPixel(int x, int y, ConsoleColor color);
         int Frame { get; }
+        ConsoleKey Keystroke { get; set; }
     }
 
     class Render : IRender {
@@ -35,7 +36,7 @@ namespace SimpleInterface {
         /// <summary>
         /// Нажатая клавиша
         /// </summary>
-        public ConsoleKeyInfo Keystroke { get; private set; }
+        public ConsoleKey Keystroke { get; set; }
         private void PrepareEnv() {
             Console.CursorVisible = false;
         }
@@ -52,7 +53,7 @@ namespace SimpleInterface {
 
                     this.Frame++;
                     if (Console.KeyAvailable == true) {
-                        Keystroke = Console.ReadKey(true);
+                        Keystroke = Console.ReadKey(true).Key;
                     }
                // }
             }
@@ -85,7 +86,153 @@ namespace SimpleInterface {
             this.X = x;
             this.Y = y;
         }
+        public void HorizMove(ConsoleKey key) {
+            if (key == ConsoleKey.LeftArrow) {
+                --this.X;
+            } else if (key == ConsoleKey.RightArrow) {
+                ++this.X;
+            }
+        }
+        public void VertMove(ConsoleKey key) {
+            ++this.Y;
+        }
     }
+    
+    /// <summary>
+    /// Тетрис, фигура Т
+    /// </summary>
+    class FigurT : Shape {
+        public ConsoleColor Color { get; set; }
+        /// <summary>
+        /// Счетчик поворотов
+        /// </summary>
+        public int Turn { get; set; }
+        public FigurT(int x,int y, ConsoleColor color): base(x,y) {
+            Color = color;   
+        }
+        public override void Draw(IRender render) {
+            if (render.Keystroke == ConsoleKey.UpArrow) {
+                Turn++;
+                render.Keystroke=0;
+            }
+            render.SetPixel(X, Y, Color);
+            render.SetPixel(X-1, Y, ((1 + Turn) % 4 == 0)?ConsoleColor.Black:Color);
+            render.SetPixel(X+1, Y, ((2 + Turn) % 4 == 0) ?ConsoleColor.Black : Color);
+            render.SetPixel(X, Y+1, ((3 + Turn) % 4 == 0) ?ConsoleColor.Black : Color);
+            render.SetPixel(X, Y - 1, ((4 + Turn) % 4 == 0) ?ConsoleColor.Black : Color);  
+        }
+    }
+    /// <summary>
+    /// Тетрис, фигура Q
+    /// </summary>
+    class FigurQ : Shape {
+        public ConsoleColor Color { get; set; }
+        public FigurQ(int x, int y, ConsoleColor color) : base(x, y) {
+            Color = color;
+        }
+        public override void Draw(IRender render) {
+            render.SetPixel(X, Y, Color);
+            render.SetPixel(X + 1, Y, Color);
+            render.SetPixel(X , Y+1, Color);
+            render.SetPixel(X+1, Y + 1, Color);
+        }
+    }
+    /// <summary>
+    /// Тетрис, фигура I
+    /// </summary>
+    class FigurI : Shape {
+        public ConsoleColor Color { get; set; }
+        /// <summary>
+        /// Счетчик поворотов
+        /// </summary>
+        public int Turn { get; set; }
+        public FigurI(int x, int y, ConsoleColor color) : base(x, y) {
+            Color = color;
+        }
+        public override void Draw(IRender render) {
+            render.SetPixel(X, Y, Color);
+            render.SetPixel(X, Y-1, Color);       
+            render.SetPixel(X, Y + 1, Color);
+            render.SetPixel(X, Y + 2, Color);
+        }
+    }
+    /// <summary>
+    /// Тетрис, фигура Z
+    /// </summary>
+    class FigurZ : Shape {
+        public ConsoleColor Color { get; set; }
+        /// <summary>
+        /// Счетчик поворотов
+        /// </summary>
+        public int Turn { get; set; }
+        public FigurZ(int x, int y, ConsoleColor color) : base(x, y) {
+            Color = color;
+        }
+        public override void Draw(IRender render) {
+            render.SetPixel(X, Y, Color);
+            render.SetPixel(X+1, Y , Color);
+            render.SetPixel(X+1, Y + 1, Color);
+            render.SetPixel(X+2, Y + 1, Color);
+        }
+    }
+    /// <summary>
+    /// Тетрис, фигура S
+    /// </summary>
+    class FigurS : Shape {
+        public ConsoleColor Color { get; set; }
+        /// <summary>
+        /// Счетчик поворотов
+        /// </summary>
+        public int Turn { get; set; }
+        public FigurS(int x, int y, ConsoleColor color) : base(x, y) {
+            Color = color;
+        }
+        public override void Draw(IRender render) {
+            render.SetPixel(X, Y, Color);
+            render.SetPixel(X + 1, Y, Color);
+            render.SetPixel(X, Y + 1, Color);
+            render.SetPixel(X - 1, Y + 1, Color);
+        }
+    }
+    /// <summary>
+    /// Тетрис, фигура J
+    /// </summary>
+    class FigurJ : Shape {
+        public ConsoleColor Color { get; set; }
+        /// <summary>
+        /// Счетчик поворотов
+        /// </summary>
+        public int Turn { get; set; }
+        public FigurJ(int x, int y, ConsoleColor color) : base(x, y) {
+            Color = color;
+        }
+        public override void Draw(IRender render) {
+            render.SetPixel(X, Y, Color);
+            render.SetPixel(X, Y+1, Color);
+            render.SetPixel(X, Y + 2, Color);
+            render.SetPixel(X -1, Y + 2, Color);
+        }
+    }
+    /// <summary>
+    /// Тетрис, фигура L
+    /// </summary>
+    class FigurL : Shape {
+        public ConsoleColor Color { get; set; }
+        /// <summary>
+        /// Счетчик поворотов
+        /// </summary>
+        public int Turn { get; set; }
+        public FigurL(int x, int y, ConsoleColor color) : base(x, y) {
+            Color = color;
+        }
+        public override void Draw(IRender render) {
+            render.SetPixel(X, Y, Color);
+            render.SetPixel(X, Y + 1, Color);
+            render.SetPixel(X, Y + 2, Color);
+            render.SetPixel(X + 1, Y + 2, Color);
+        }
+    }
+    /*
     class WhitePoint : Shape {
         public WhitePoint(int x, int y) : base(x, y) {
         }
@@ -140,110 +287,5 @@ namespace SimpleInterface {
             X = X % Console.WindowWidth + 1;
             base.Draw(render);
         }
-    }
-    /// <summary>
-    /// Тетрис, фигура Т
-    /// </summary>
-    class FigurT : Shape {
-        public ConsoleColor Color { get; set; }
-        public FigurT(int x,int y, ConsoleColor color): base(x,y) {
-            Color = color;   
-        }
-        public override void Draw(IRender render) {
-            render.SetPixel(X, Y, Color);
-            render.SetPixel(X-1, Y, Color);
-            render.SetPixel(X+1, Y, Color);
-            render.SetPixel(X, Y+1, Color);
-        }
-    }
-    /// <summary>
-    /// Тетрис, фигура Q
-    /// </summary>
-    class FigurQ : Shape {
-        public ConsoleColor Color { get; set; }
-        public FigurQ(int x, int y, ConsoleColor color) : base(x, y) {
-            Color = color;
-        }
-        public override void Draw(IRender render) {
-            render.SetPixel(X, Y, Color);
-            render.SetPixel(X + 1, Y, Color);
-            render.SetPixel(X , Y+1, Color);
-            render.SetPixel(X+1, Y + 1, Color);
-        }
-    }
-    /// <summary>
-    /// Тетрис, фигура I
-    /// </summary>
-    class FigurI : Shape {
-        public ConsoleColor Color { get; set; }
-        public FigurI(int x, int y, ConsoleColor color) : base(x, y) {
-            Color = color;
-        }
-        public override void Draw(IRender render) {
-            render.SetPixel(X, Y, Color);
-            render.SetPixel(X, Y+1, Color);
-            render.SetPixel(X, Y + 2, Color);
-            render.SetPixel(X, Y + 3, Color);
-        }
-    }
-    /// <summary>
-    /// Тетрис, фигура Z
-    /// </summary>
-    class FigurZ : Shape {
-        public ConsoleColor Color { get; set; }
-        public FigurZ(int x, int y, ConsoleColor color) : base(x, y) {
-            Color = color;
-        }
-        public override void Draw(IRender render) {
-            render.SetPixel(X, Y, Color);
-            render.SetPixel(X+1, Y , Color);
-            render.SetPixel(X+1, Y + 1, Color);
-            render.SetPixel(X+2, Y + 1, Color);
-        }
-    }
-    /// <summary>
-    /// Тетрис, фигура S
-    /// </summary>
-    class FigurS : Shape {
-        public ConsoleColor Color { get; set; }
-        public FigurS(int x, int y, ConsoleColor color) : base(x, y) {
-            Color = color;
-        }
-        public override void Draw(IRender render) {
-            render.SetPixel(X, Y, Color);
-            render.SetPixel(X + 1, Y, Color);
-            render.SetPixel(X, Y + 1, Color);
-            render.SetPixel(X - 1, Y + 1, Color);
-        }
-    }
-    /// <summary>
-    /// Тетрис, фигура J
-    /// </summary>
-    class FigurJ : Shape {
-        public ConsoleColor Color { get; set; }
-        public FigurJ(int x, int y, ConsoleColor color) : base(x, y) {
-            Color = color;
-        }
-        public override void Draw(IRender render) {
-            render.SetPixel(X, Y, Color);
-            render.SetPixel(X, Y+1, Color);
-            render.SetPixel(X, Y + 2, Color);
-            render.SetPixel(X -1, Y + 2, Color);
-        }
-    }
-    /// <summary>
-    /// Тетрис, фигура L
-    /// </summary>
-    class FigurL : Shape {
-        public ConsoleColor Color { get; set; }
-        public FigurL(int x, int y, ConsoleColor color) : base(x, y) {
-            Color = color;
-        }
-        public override void Draw(IRender render) {
-            render.SetPixel(X, Y, Color);
-            render.SetPixel(X, Y + 1, Color);
-            render.SetPixel(X, Y + 2, Color);
-            render.SetPixel(X + 1, Y + 2, Color);
-        }
-    }
+    }*/
 }
