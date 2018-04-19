@@ -28,7 +28,6 @@ namespace SimpleInterface {
         void Draw(IEnumerable<IShape> shapes);
         void SetPixel(int x, int y, ConsoleColor color);
         int Frame { get; }
-        ConsoleKey Keystroke { get; set; }
     }
 
     class Render : IRender {
@@ -138,11 +137,25 @@ namespace SimpleInterface {
         }
         public override void Draw(IRender render) {
             render.SetPixel(X, Y, Color);
-            render.SetPixel(X-1, Y, ((1 + CountTurn) % 4 == 0)?ConsoleColor.Black:Color);
-            render.SetPixel(X+1, Y, ((2 + CountTurn) % 4 == 0) ?ConsoleColor.Black : Color);
-            render.SetPixel(X, Y+1, ((3 + CountTurn) % 4 == 0) ?ConsoleColor.Black : Color);
-            render.SetPixel(X, Y - 1, ((4 + CountTurn) % 4 == 0) ?ConsoleColor.Black : Color);  
-        }
+            render.SetPixel(X, Y, Color);
+            if (CountTurn % 4 == 0) { // горизонтально
+                render.SetPixel(X-1, Y, Color);
+                render.SetPixel(X+1, Y, Color);
+                render.SetPixel(X, Y + 1, Color);
+            } else if (CountTurn % 4 == 1) {
+                render.SetPixel(X, Y - 1, Color);
+                render.SetPixel(X, Y + 1, Color);
+                render.SetPixel(X-1, Y , Color);
+            } else if (CountTurn % 4 == 2) {
+                render.SetPixel(X-1, Y, Color);
+                render.SetPixel(X, Y - 1, Color);
+                render.SetPixel(X+1, Y, Color);
+            } else if (CountTurn % 4 == 3) {
+                render.SetPixel(X, Y - 1, Color);
+                render.SetPixel(X+1, Y , Color);
+                render.SetPixel(X, Y + 1, Color);
+            }
+}
     }
     /// <summary>
     /// Тетрис, фигура Q
