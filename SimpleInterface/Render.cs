@@ -9,6 +9,7 @@ namespace SimpleInterface
         const int maxY = 20;
         const int maxX = 40;
         const int timeFrame = 100;
+        private Canvas canvas = new Canvas(10,20);
         public int Frame { get; private set; }
         /// <summary>
         /// Нажатая клавиша
@@ -48,6 +49,7 @@ namespace SimpleInterface
                     }
                     Wait();
                     Clear();
+                    canvas.Draw(this);  // Рисуем "Стакан"
                     this.Frame++;
                     if (Console.KeyAvailable == true) {
                         Keystroke = Console.ReadKey(true).Key;
