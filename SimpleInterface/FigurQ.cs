@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace SimpleInterface
-{
+namespace SimpleInterface {
     /// <summary>
     /// Тетрис, фигура Q
     /// </summary>

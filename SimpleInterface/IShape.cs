@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SimpleInterface
-{
+﻿namespace SimpleInterface {
     interface IShape {
         int X { get; set; }
         int Y { get; set; }

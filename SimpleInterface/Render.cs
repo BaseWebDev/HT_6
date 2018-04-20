@@ -8,6 +8,7 @@ namespace SimpleInterface
     class Render : IRender {
         const int maxY = 20;
         const int maxX = 40;
+        const int timeFrame = 100;
         public int Frame { get; private set; }
         /// <summary>
         /// Нажатая клавиша
@@ -61,7 +62,7 @@ namespace SimpleInterface
             }
         }
         private void Wait() {
-            Thread.Sleep(100);
+            Thread.Sleep(timeFrame);
         }
         private void Clear() {
             Console.Clear();

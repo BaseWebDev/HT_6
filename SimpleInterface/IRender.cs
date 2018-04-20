@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace SimpleInterface
-{
+namespace SimpleInterface {
 
     interface IRender {
         void Draw(IEnumerable<IShape> shapes);

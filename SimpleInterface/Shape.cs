@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SimpleInterface
-{
+﻿namespace SimpleInterface {
     abstract class Shape : IShape {
         public int X { get; set; }
         public int Y { get; set; }
