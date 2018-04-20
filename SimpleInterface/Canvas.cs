@@ -30,7 +30,6 @@ namespace SimpleInterface
                     if (i == 0 || i == (Width - 1)||j==(Height-1)) {
                         points.Add(new Point(i, j, Color));
                     }
-
                 }
             }
             return points;

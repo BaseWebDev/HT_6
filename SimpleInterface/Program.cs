@@ -3,20 +3,26 @@ using System.Collections.Generic;
 
 namespace SimpleInterface {
     class Program {
+        /// <summary>
+        /// Ширина игрового поля
+        /// </summary>
+        const int widthField = 10;
+        /// <summary>
+        /// Высота игрового поля
+        /// </summary>
+        const int heightField = 20;
         static void Main(string[] args) {
             var shapes = new List<IShape>();
-        //    shapes.Add(new WhitePoint(10, 10));
-        //    shapes.Add(new AniStar(34, 10, ConsoleColor.Green));
-        //    shapes.Add(new MoveableStar(12, 20, ConsoleColor.Red));
-            shapes.Add(new FigurT(20,1,ConsoleColor.Yellow));
-            shapes.Add(new FigurQ(20, 4, ConsoleColor.Yellow));
-            shapes.Add(new FigurI(20, 4, ConsoleColor.Yellow));
-            shapes.Add(new FigurZ(20, 4, ConsoleColor.Yellow));
-            shapes.Add(new FigurS(20, 4, ConsoleColor.Yellow));
-            shapes.Add(new FigurJ(20, 4, ConsoleColor.Yellow));
-            shapes.Add(new FigurL(20, 4, ConsoleColor.Yellow));
+            int middleField = widthField / 2;
+            shapes.Add(new FigurT(middleField, 4,ConsoleColor.Yellow));
+            shapes.Add(new FigurQ(middleField, 4, ConsoleColor.Yellow));
+            shapes.Add(new FigurI(middleField, 4, ConsoleColor.Yellow));
+            shapes.Add(new FigurZ(middleField, 4, ConsoleColor.Yellow));
+            shapes.Add(new FigurS(middleField, 4, ConsoleColor.Yellow));
+            shapes.Add(new FigurJ(middleField, 4, ConsoleColor.Yellow));
+            shapes.Add(new FigurL(middleField, 4, ConsoleColor.Yellow));
 
-            var engine = new Render();
+            var engine = new Render(widthField,heightField);
             engine.Draw(shapes);
 
             Console.ReadKey();

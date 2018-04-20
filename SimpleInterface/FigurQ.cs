@@ -10,6 +10,7 @@ namespace SimpleInterface {
             Color = color;
         }
         public override void Draw(IRender render) {
+            Height = 2; Width = 2;
             render.SetPixel(X, Y, Color);
             render.SetPixel(X + 1, Y, Color);
             render.SetPixel(X, Y + 1, Color);

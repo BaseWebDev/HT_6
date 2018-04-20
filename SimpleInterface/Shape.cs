@@ -1,18 +1,13 @@
 ﻿namespace SimpleInterface {
-    abstract class Shape : IShape {
-        public int X { get; set; }
-        public int Y { get; set; }
+    abstract class Shape :Image, IShape {
+        /// <summary>
+        /// Счетчик поворотов
+        /// </summary>
         public int CountTurn { get; set; }
-        public abstract void Draw(IRender render);
-        public Shape(int x, int y) {
-            this.X = x;
-            this.Y = y;
-            this.CountTurn = 0;
+        public Shape(int x, int y):this(x,y,0) {
         }
-        public Shape(int x, int y, int z) {
-            this.X = x;
-            this.Y = y;
-            this.CountTurn = z;
+        public Shape(int x, int y, int turn):base(x,y) {
+            this.CountTurn = turn;
         }
     }
 }
