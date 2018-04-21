@@ -36,9 +36,11 @@ namespace SimpleInterface {
         private bool WholeLine(Point point) {
             return point.Y == DeleteLine;
         }
-        public void MoveDown() {
+        public void MoveDown(int line) {
             foreach (var point in Points) {
-                ++point.Y;
+                if (point.Y < line) { // Чтоб небыло разрывов
+                    ++point.Y;
+                }
             }
         }
 

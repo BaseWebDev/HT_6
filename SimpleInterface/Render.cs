@@ -202,7 +202,7 @@ namespace SimpleInterface
             }
             foreach (var line in deleteLines) { // Делаем так чтоб не использовать IEnumerable<Point> вызывает ошибку
                 heap.Remove(line);
-                heap.MoveDown();
+                heap.MoveDown(line);
                 ++CountDeleteLine;
             }
             heap.Draw(this);
