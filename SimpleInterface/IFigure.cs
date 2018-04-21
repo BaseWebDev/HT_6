@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 
 namespace SimpleInterface {
-    interface IShape {
+    interface IFigure {
         int X { get; set; }
         int Y { get; set; }
+
+        List<Point> Points { get; set; }
         /// <summary>
         /// Поворот по часовой стрелке
         /// </summary>

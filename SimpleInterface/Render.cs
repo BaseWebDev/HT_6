@@ -24,7 +24,7 @@ namespace SimpleInterface
 
         const int timeFrame = 100;
         private Canvas canvas;
-        private HeapFigur heapFigur;
+        private Heap heapFigur;
         public int Frame { get; private set; }
         /// <summary>
         /// Нажатая клавиша
@@ -39,7 +39,7 @@ namespace SimpleInterface
             // + 1 по вертикали
             // + 2 по горизонтали
             canvas = new Canvas(widthField+dX, heightField+dY);   // по идее dX и dY должно возвращаться из Canvas 
-            heapFigur = new HeapFigur(widthField, heightField);
+            heapFigur = new Heap(widthField, heightField);
             this.minX = canvas.X+(dX / 2);
             //this.minY = 0;
             this.maxX = widthField+canvas.X + (dX / 2);
@@ -48,7 +48,7 @@ namespace SimpleInterface
         /// <summary>
         /// Движение фигуры вниз с постоянной скоростью
         /// </summary>
-        public bool VertMove(IShape shape) {
+        public bool VertMove(IFigure shape) {
             if (shape.Y < maxY) {
                 ++shape.Y;
                 return true;
@@ -59,14 +59,14 @@ namespace SimpleInterface
         /// Движение фигуры в право и лево
         /// </summary>
         /// <param name="key">Нажатая клавиша</param>
-        public void HorizMove(IShape shape, ConsoleKey key) {
+        public void HorizMove(IFigure shape, ConsoleKey key) {
             if (key == ConsoleKey.LeftArrow) {
                 if (shape.X > minX) { --shape.X; }      
             } else if (key == ConsoleKey.RightArrow) {
                 if (shape.X < maxX) { ++shape.X; }
             }
         }
-        public void Draw(IEnumerable<IShape> shapes) {
+        public void Draw(IEnumerable<IFigure> shapes) {
             this.PrepareEnv();
             foreach (var shape in shapes) {
                 while (true) {
@@ -105,6 +105,17 @@ namespace SimpleInterface
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = color;
             Console.Write("■");
-        }      
+        }
+
+        public void SetPixel(List<Point> points) {
+            foreach (var point in points) {
+                if ((point.X < 0 || point.Y < 0) || (point.X >= Console.WindowWidth || point.Y >= Console.WindowHeight)) {
+                    return;
+                }
+                Console.SetCursorPosition(point.X, point.Y);
+                Console.ForegroundColor = point.Color;
+                Console.Write("■");
+            }
+        }
     }
 }

@@ -6,15 +6,13 @@ namespace SimpleInterface {
     /// <summary>
     /// "Нагромождение фигур"
     /// </summary>
-    class HeapFigur : Image{
+    class Heap : Image{
         public List<Point> Points;
-        private RenderPoints renderPoints;
-        public HeapFigur(int w, int h) : this(0, 0, w, h) {
+        public Heap(int w, int h) : this(0, 0, w, h) {
         }
 
-        public HeapFigur(int x, int y, int w, int h) : base(x, y, w, h) {
-            renderPoints = new RenderPoints();
-            Points = new List<Point>();
+        public Heap(int x, int y, int w, int h) : base(x, y, w, h) {
+           Points = new List<Point>();
         }
         /// <summary>
         /// Добавляем фигуры в наш стакан
@@ -22,14 +20,10 @@ namespace SimpleInterface {
         /// </summary>
         /// <param name="shape">сами фигуры</param>
        
-        public void Add(IShape shape) {
-            shape.Draw(renderPoints); 
-            Points.AddRange(renderPoints.Points);
-            renderPoints.Points.Clear();
-        }
-        private void ConvertIShapeToPoints(IShape shape) {
-
-            
+        public void Add(IFigure shape) {
+        //    shape.Draw(renderPoints); 
+            Points.AddRange(shape.Points);
+        //    renderPoints.Points.Clear();
         }
         public override void Draw(IRender render) {
             foreach (var point in Points) {
