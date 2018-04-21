@@ -16,13 +16,15 @@ namespace SimpleInterface
         /// <summary>
         /// Толщина стенок изображения "Стакан" по X
         /// </summary>
-        const int dX=2;
+        const int dX = 2;
         /// <summary>
         /// Толщина стенок изображения "Стакан" по Y
         /// </summary>
-        const int dY=1;
+        const int dY = 1;
 
-        const int timeFrame = 100;
+        public int WidthField { get; private set;}
+
+        const int timeFrame = 200;
         private Canvas canvas;
         private Heap heap;
         public int Frame { get; private set; }
@@ -41,21 +43,20 @@ namespace SimpleInterface
             //this.minY = 0;
             this.maxX = widthField+canvas.X + (dX / 2);
             this.maxY = heightField-canvas.Y;
+            WidthField=widthField;
         }
         public void Draw(IEnumerable<IFigure> figures) {
             this.PrepareEnv();
             foreach (var figure in figures) {
                 while (true) {
+                    Clear();
                     figure.Draw(this);
                     if (!DownMove(figure)) {
                         heap.Add(figure);
                         break;
-                    }
-                    Wait();
-                    Clear();
-                    canvas.Draw(this);  // Рисуем "Стакан"
-                    heap.Draw(this);    // Рисуем "Кучу" внизу
-                                  
+                    }                  
+                    
+
                     if (Console.KeyAvailable == true) { // Управление
                         switch (Console.ReadKey(true).Key) {
                             case ConsoleKey.UpArrow:
@@ -69,6 +70,10 @@ namespace SimpleInterface
                                 break;
                         }                       
                     }
+                    canvas.Draw(this);  // Рисуем "Стакан"
+                    heap.Draw(this);    // Рисуем "Кучу" внизу
+                    DeleteLine();
+                    Wait();                   
                     this.Frame++;
                 }
             }
@@ -92,7 +97,7 @@ namespace SimpleInterface
         /// <summary>
         /// Поворот фигуры по часовой стрелке
         /// </summary>
-        public void Turn(IFigure figure) {
+        private void Turn(IFigure figure) {
             foreach (var point in canvas) {
                 foreach (var pointFig in figure) {
                     if (pointFig.X + figure.Height == point.X & pointFig.Y == point.Y) {
@@ -112,7 +117,7 @@ namespace SimpleInterface
         /// <summary>
         /// Движение фигуры вниз с постоянной скоростью
         /// </summary>
-        public bool DownMove(IFigure figure) {
+        private bool DownMove(IFigure figure) {
             foreach (var point in canvas) {
                 foreach (var pointFig in figure) {
                     if (pointFig.X == point.X & pointFig.Y+1 == point.Y) {
@@ -133,7 +138,7 @@ namespace SimpleInterface
         /// <summary>
         /// Движение фигуры в право
         /// </summary>
-        public void RightMove(IFigure figure) {
+        private void RightMove(IFigure figure) {
             foreach (var point in canvas) {
                 foreach (var pointFig in figure) {
                     if (pointFig.X + 1 == point.X & pointFig.Y == point.Y) {
@@ -153,7 +158,7 @@ namespace SimpleInterface
         /// <summary>
         /// Движение фигуры лево
         /// </summary>
-        public void LeftMove(IFigure figure) {
+        private void LeftMove(IFigure figure) {
             foreach (var point in canvas) {
                 foreach (var pointFig in figure) {
                     if (pointFig.X - 1 == point.X & pointFig.Y == point.Y) {
@@ -169,6 +174,28 @@ namespace SimpleInterface
                 }
             }
             --figure.X;
+        }
+        private void DeleteLine() {
+            heap.Sort(); // Сортируем по Y
+            int countY = 0;
+            int lastY = -1;
+            List<int> deleteLines = new List<int>();
+            foreach (var point in heap) {
+                if (point.Y == lastY || lastY == -1) {
+                    ++countY;
+                } else {
+                    countY=1;
+                }               
+                if (countY == WidthField) {
+                    deleteLines.Add(point.Y);
+                }
+                lastY = point.Y;
+            }
+            foreach (var line in deleteLines) { // Делаем так чтоб не использовать IEnumerable<Point> вызывает ошибку
+                heap.Remove(line);
+            }
+            heap.Draw(this);
+
         }
     }
 }

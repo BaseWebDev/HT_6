@@ -1,7 +1,7 @@
 ﻿using System;
 namespace SimpleInterface
 {
-    class Point {
+    class Point:IComparable {
         public int X {get;set;}
         public int Y { get; set;}
         public ConsoleColor Color { get; set; }
@@ -9,6 +9,14 @@ namespace SimpleInterface
             this.X = x;
             this.Y = y;
             this.Color = col;
+        }
+
+        public int CompareTo(object obj) {
+            if (obj is Point) {
+                Point temp = obj as Point;
+                return this.Y- temp.Y;
+            }
+            return -1;
         }
     }
 }

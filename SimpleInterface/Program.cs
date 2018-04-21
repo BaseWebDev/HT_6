@@ -14,6 +14,17 @@ namespace SimpleInterface {
         static void Main(string[] args) {
             var Figures = new List<IFigure>();
             int middleField = widthField / 2;
+            Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "I"));
+            Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "I"));
+            Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "I"));
+            Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "I"));
+            Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "I"));
+            Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "I"));
+            Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "I"));
+            Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "I"));
+            Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "I"));
+            Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "I"));
+            Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "I"));
             Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "T"));
             Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "Q"));
             Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "I"));
