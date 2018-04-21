@@ -18,11 +18,11 @@ namespace SimpleInterface {
         /// Добавляем фигуры в наш стакан
         /// с преобразованием
         /// </summary>
-        /// <param name="shape">сами фигуры</param>
+        /// <param name="figure">сами фигуры</param>
        
-        public void Add(IFigure shape) {
+        public void Add(IFigure figure) {
         //    shape.Draw(renderPoints); 
-            Points.AddRange(shape.Points);
+            Points.AddRange(figure.Points);
         //    renderPoints.Points.Clear();
         }
         public override void Draw(IRender render) {

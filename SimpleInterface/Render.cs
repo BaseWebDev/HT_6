@@ -24,7 +24,7 @@ namespace SimpleInterface
 
         const int timeFrame = 100;
         private Canvas canvas;
-        private Heap heapFigur;
+        private Heap heap;
         public int Frame { get; private set; }
         /// <summary>
         /// Нажатая клавиша
@@ -39,7 +39,7 @@ namespace SimpleInterface
             // + 1 по вертикали
             // + 2 по горизонтали
             canvas = new Canvas(widthField+dX, heightField+dY);   // по идее dX и dY должно возвращаться из Canvas 
-            heapFigur = new Heap(widthField, heightField);
+            heap = new Heap(widthField, heightField);
             this.minX = canvas.X+(dX / 2);
             //this.minY = 0;
             this.maxX = widthField+canvas.X + (dX / 2);
@@ -59,32 +59,32 @@ namespace SimpleInterface
         /// Движение фигуры в право и лево
         /// </summary>
         /// <param name="key">Нажатая клавиша</param>
-        public void HorizMove(IFigure shape, ConsoleKey key) {
+        public void HorizMove(IFigure figure, ConsoleKey key) {
             if (key == ConsoleKey.LeftArrow) {
-                if (shape.X > minX) { --shape.X; }      
+                if (figure.X > minX) { --figure.X; }      
             } else if (key == ConsoleKey.RightArrow) {
-                if (shape.X < maxX) { ++shape.X; }
+                if (figure.X < maxX) { ++figure.X; }
             }
         }
-        public void Draw(IEnumerable<IFigure> shapes) {
+        public void Draw(IEnumerable<IFigure> figures) {
             this.PrepareEnv();
-            foreach (var shape in shapes) {
+            foreach (var figure in figures) {
                 while (true) {
-                    shape.Draw(this);
-                    if (!VertMove(shape)) {
-                        heapFigur.Add(shape);
+                    figure.Draw(this);
+                    if (!VertMove(figure)) {
+                        heap.Add(figure);
                         break;
                     }
                     Wait();
                     Clear();
                     canvas.Draw(this);  // Рисуем "Стакан"
-                    heapFigur.Draw(this);
+                    heap.Draw(this);
                     
                     if (Console.KeyAvailable == true) {
                         Keystroke = Console.ReadKey(true).Key;
-                        HorizMove(shape, Keystroke);
+                        HorizMove(figure, Keystroke);
                         if (Keystroke == ConsoleKey.UpArrow) {
-                            shape.CountTurn++;
+                            figure.CountTurn++;
                             Keystroke = 0;
                         }
                     }

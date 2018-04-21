@@ -12,17 +12,6 @@ namespace SimpleInterface {
         /// </summary>
         const int heightField = 20;
         static void Main(string[] args) {
-            /*
-            var shapes = new List<IShape>();
-            int middleField = widthField / 2;
-            shapes.Add(new FigurT(middleField, 4,ConsoleColor.Yellow));
-            shapes.Add(new FigurQ(middleField, 4, ConsoleColor.Yellow));
-            shapes.Add(new FigurI(middleField, 4, ConsoleColor.Yellow));
-            shapes.Add(new FigurZ(middleField, 4, ConsoleColor.Yellow));
-            shapes.Add(new FigurS(middleField, 4, ConsoleColor.Yellow));
-            shapes.Add(new FigurJ(middleField, 4, ConsoleColor.Yellow));
-            shapes.Add(new FigurL(middleField, 4, ConsoleColor.Yellow));
-            */
             var Figures = new List<IFigure>();
             int middleField = widthField / 2;
             Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "T"));
@@ -34,8 +23,6 @@ namespace SimpleInterface {
             Figures.Add(new FactoryFigure(middleField, 4, ConsoleColor.Yellow, "L"));
             var engine = new Render(widthField,heightField);
             engine.Draw(Figures);
-            // engine.Draw(shapes);
-
             Console.ReadKey();
         }
     }
