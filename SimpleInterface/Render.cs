@@ -31,8 +31,12 @@ namespace SimpleInterface
         /// </summary>
         public int CountDeleteLine { get; private set; }
         public int WidthField { get; private set;}
-
-        const int timeFrame = 200;
+        /// <summary>
+        /// Задержка изменения кадра (чем выше, тем движенее медленнее)
+        /// </summary>
+        public int TimeFrame { get; private set; } 
+        const int minTimeFrame = 100;
+        const int maxTimeFrame = 250;
         private Canvas canvas;
         private Heap heap;
         public int Frame { get; private set; }
@@ -52,21 +56,25 @@ namespace SimpleInterface
             this.maxX = widthField+canvas.X + (dX / 2);
             this.maxY = heightField-canvas.Y;
             WidthField=widthField;
+            TimeFrame = maxTimeFrame;
         }
         public void Draw(IEnumerable<IFigure> figures) {
             this.PrepareEnv();
+            this.Clear(); 
             foreach (var figure in figures) {
                 while (true) {
+                    TimeFrame = maxTimeFrame;
                     Clear();
                     figure.Draw(this);
                     if (!DownMove(figure)) {
                         heap.Add(figure);
                         break;
                     }                  
-                    
-
                     if (Console.KeyAvailable == true) { // Управление
                         switch (Console.ReadKey(true).Key) {
+                            case ConsoleKey.DownArrow:
+                                TimeFrame = minTimeFrame;
+                                break;
                             case ConsoleKey.UpArrow:
                                 figure.CountTurn++;
                                 break;
@@ -88,7 +96,7 @@ namespace SimpleInterface
             }
         }
         private void Wait() {
-            Thread.Sleep(timeFrame);
+            Thread.Sleep(TimeFrame);
         }
         private void Clear() {
             Console.Clear();
