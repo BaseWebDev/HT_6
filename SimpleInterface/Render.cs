@@ -24,6 +24,7 @@ namespace SimpleInterface
 
         const int timeFrame = 100;
         private Canvas canvas;
+        private HeapFigur heapFigur;
         public int Frame { get; private set; }
         /// <summary>
         /// Нажатая клавиша
@@ -38,10 +39,11 @@ namespace SimpleInterface
             // + 1 по вертикали
             // + 2 по горизонтали
             canvas = new Canvas(widthField+dX, heightField+dY);   // по идее dX и dY должно возвращаться из Canvas 
+            heapFigur = new HeapFigur(widthField, heightField);
             this.minX = canvas.X+(dX / 2);
             this.minY = 0;
             this.maxX = widthField+canvas.X + (dX / 2);
-            this.maxY = heightField+canvas.Y;
+            this.maxY = heightField-canvas.Y;
         }
         /// <summary>
         /// Движение фигуры вниз с постоянной скоростью
@@ -70,12 +72,14 @@ namespace SimpleInterface
                 while (true) {
                     shape.Draw(this);
                     if (!VertMove(shape)) {
+                        heapFigur.Add(shape);
                         break;
                     }
                     Wait();
                     Clear();
                     canvas.Draw(this);  // Рисуем "Стакан"
-                    this.Frame++;
+                    heapFigur.Draw(this);
+                    
                     if (Console.KeyAvailable == true) {
                         Keystroke = Console.ReadKey(true).Key;
                         HorizMove(shape, Keystroke);
@@ -84,6 +88,7 @@ namespace SimpleInterface
                             Keystroke = 0;
                         }
                     }
+                    this.Frame++;
                 }
             }
         }
@@ -100,6 +105,16 @@ namespace SimpleInterface
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = color;
             Console.Write("■");
+        }
+        public void SetPixel(List<Point> points) {
+            foreach (var point in points) {
+                if ((point.X < 0 || point.Y < 0) || (point.X >= Console.WindowWidth || point.Y >= Console.WindowHeight)) {
+                    return;
+                }
+                Console.SetCursorPosition(point.X, point.Y);
+                Console.ForegroundColor = point.Color;
+                Console.Write("■");
+            }
         }
     }
 }
