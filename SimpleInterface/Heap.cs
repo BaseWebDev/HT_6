@@ -6,7 +6,7 @@ namespace SimpleInterface {
     /// <summary>
     /// "Нагромождение фигур"
     /// </summary>
-    class Heap : Image{
+    class Heap : Image, IEnumerable<Point>{
         public List<Point> Points;
         public Heap(int w, int h) : this(0, 0, w, h) {
         }
@@ -26,9 +26,15 @@ namespace SimpleInterface {
         //    renderPoints.Points.Clear();
         }
         public override void Draw(IRender render) {
-            foreach (var point in Points) {
-                render.SetPixel(point.X + this.X, point.Y + this.Y, point.Color);
-            }
-        }     
+            render.SetPixel(Points);
+        }
+
+        public IEnumerator<Point> GetEnumerator() {
+            return Points.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return Points.GetEnumerator();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace SimpleInterface
@@ -6,9 +7,9 @@ namespace SimpleInterface
     /// <summary>
     /// "Стакан"
     /// </summary>
-    class Canvas : Image {
+    class Canvas : Image, IEnumerable<Point> {
         public ConsoleColor Color { get; set; }
-        public List<Point> Points;
+        private List<Point> Points;
         public Canvas(int w, int h):this(0,0,w,h, ConsoleColor.White) {
         }
 
@@ -35,9 +36,16 @@ namespace SimpleInterface
             return points;
         }
         public override void Draw(IRender render) {
-            foreach (var point in Points) {
-                render.SetPixel(point.X+this.X,point.Y+this.Y,point.Color);
-            }
+            render.SetPixel(Points);
+  
+        }
+
+        public IEnumerator<Point> GetEnumerator() {
+            return Points.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return Points.GetEnumerator();
         }
     }
 }
