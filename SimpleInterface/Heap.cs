@@ -22,9 +22,7 @@ namespace SimpleInterface {
         /// <param name="figure">сами фигуры</param>
        
         public void Add(IFigure figure) {
-        //    shape.Draw(renderPoints); 
             Points.AddRange(figure.Points);
-        //    renderPoints.Points.Clear();
         }
 
         public void Sort() {
@@ -38,6 +36,12 @@ namespace SimpleInterface {
         private bool WholeLine(Point point) {
             return point.Y == DeleteLine;
         }
+        public void MoveDown() {
+            foreach (var point in Points) {
+                ++point.Y;
+            }
+        }
+
         public override void Draw(IRender render) {
             render.SetPixel(Points);
         }
