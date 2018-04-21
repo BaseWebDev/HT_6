@@ -21,7 +21,15 @@ namespace SimpleInterface
         /// Толщина стенок изображения "Стакан" по Y
         /// </summary>
         const int dY = 1;
-
+        /// <summary>
+        /// Расположение табло счета
+        /// </summary>
+        const int scoreX = 20;
+        const int scoreY = 5;
+        /// <summary>
+        /// Кол-во удаленных строк
+        /// </summary>
+        public int CountDeleteLine { get; private set; }
         public int WidthField { get; private set;}
 
         const int timeFrame = 200;
@@ -73,6 +81,7 @@ namespace SimpleInterface
                     canvas.Draw(this);  // Рисуем "Стакан"
                     heap.Draw(this);    // Рисуем "Кучу" внизу
                     DeleteLine();
+                    ScoreDraw();
                     Wait();                   
                     this.Frame++;
                 }
@@ -194,9 +203,15 @@ namespace SimpleInterface
             foreach (var line in deleteLines) { // Делаем так чтоб не использовать IEnumerable<Point> вызывает ошибку
                 heap.Remove(line);
                 heap.MoveDown();
+                ++CountDeleteLine;
             }
             heap.Draw(this);
 
+        }
+        private void ScoreDraw (){
+            Console.SetCursorPosition(scoreX, scoreY);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("Счет: "+ CountDeleteLine);
         }
     }
 }
