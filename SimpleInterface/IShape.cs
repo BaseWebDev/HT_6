@@ -1,4 +1,6 @@
-﻿namespace SimpleInterface {
+﻿using System.Collections.Generic;
+
+namespace SimpleInterface {
     interface IShape {
         int X { get; set; }
         int Y { get; set; }

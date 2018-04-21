@@ -5,7 +5,6 @@ namespace SimpleInterface {
     /// Тетрис, фигура Т
     /// </summary>
     class FigurT : Shape {
-        public ConsoleColor Color { get; set; }
         public FigurT(int x, int y, ConsoleColor color) : base(x, y) {
             Color = color;
         }

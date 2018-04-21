@@ -5,8 +5,7 @@ namespace SimpleInterface {
     /// Тетрис, фигура L
     /// </summary>
     class FigurL : Shape {
-        public ConsoleColor Color { get; set; }
-        public FigurL(int x, int y, ConsoleColor color) : base(x, y) {
+       public FigurL(int x, int y, ConsoleColor color) : base(x, y) {
             Color = color;
         }
         public override void Draw(IRender render) {

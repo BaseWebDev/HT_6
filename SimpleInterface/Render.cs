@@ -10,7 +10,7 @@ namespace SimpleInterface
         /// Минимальные и максимальные значения игрового поля
         /// </summary>
         private int minX;
-        private int minY;  
+        // private int minY;  
         private int maxX;
         private int maxY;
         /// <summary>
@@ -41,7 +41,7 @@ namespace SimpleInterface
             canvas = new Canvas(widthField+dX, heightField+dY);   // по идее dX и dY должно возвращаться из Canvas 
             heapFigur = new HeapFigur(widthField, heightField);
             this.minX = canvas.X+(dX / 2);
-            this.minY = 0;
+            //this.minY = 0;
             this.maxX = widthField+canvas.X + (dX / 2);
             this.maxY = heightField-canvas.Y;
         }
@@ -105,16 +105,6 @@ namespace SimpleInterface
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = color;
             Console.Write("■");
-        }
-        public void SetPixel(List<Point> points) {
-            foreach (var point in points) {
-                if ((point.X < 0 || point.Y < 0) || (point.X >= Console.WindowWidth || point.Y >= Console.WindowHeight)) {
-                    return;
-                }
-                Console.SetCursorPosition(point.X, point.Y);
-                Console.ForegroundColor = point.Color;
-                Console.Write("■");
-            }
-        }
+        }      
     }
 }
