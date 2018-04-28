@@ -31,9 +31,9 @@ namespace SimpleInterface {
             var engine = new Render(widthField,heightField);
             Console.WriteLine("\tМиниТетрис");
             Console.WriteLine();
-            Console.WriteLine(@"Стрелка""Вверх"" - перевернуть фигуру");
-            Console.WriteLine(@"Стрелка""Вниз"" - ускорить падение");
-            Console.WriteLine(@"Стрелка""Вправо""-""Влево"" - движение фигуры вправо и влево");
+            Console.WriteLine(@"Стрелка ""Вверх"" - перевернуть фигуру");
+            Console.WriteLine(@"Стрелка ""Вниз"" - ускорить падение");
+            Console.WriteLine(@"Стрелка ""Вправо"" - ""Влево"" - движение фигуры вправо и влево");
             Console.WriteLine();
             Console.WriteLine(@"Жми ""Enter"" для начала...");   
             Console.ReadKey();

@@ -12,9 +12,9 @@ namespace SimpleInterface
         }
 
         public int CompareTo(object obj) {
-            if (obj is Point) {
-                Point temp = obj as Point;
-                return this.Y- temp.Y;
+            Point temp = obj as Point;
+            if (temp != null) {
+                return this.Y - temp.Y;
             }
             return -1;
         }

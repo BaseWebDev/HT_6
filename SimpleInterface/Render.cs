@@ -94,6 +94,7 @@ namespace SimpleInterface
                     this.Frame++;
                 }
             }
+            Console.WriteLine("GAME OVER");
         }
         private void Wait() {
             Thread.Sleep(TimeFrame);
@@ -153,7 +154,7 @@ namespace SimpleInterface
             return true;
         }
         /// <summary>
-        /// Движение фигуры в право
+        /// Движение фигуры вправо
         /// </summary>
         private void RightMove(IFigure figure) {
             foreach (var point in canvas) {
@@ -173,7 +174,7 @@ namespace SimpleInterface
             ++figure.X;
         }
         /// <summary>
-        /// Движение фигуры лево
+        /// Движение фигуры влево
         /// </summary>
         private void LeftMove(IFigure figure) {
             foreach (var point in canvas) {

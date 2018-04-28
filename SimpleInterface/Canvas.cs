@@ -10,12 +10,9 @@ namespace SimpleInterface
     class Canvas : Image, IEnumerable<Point> {
         public ConsoleColor Color { get; set; }
         private List<Point> Points;
-        public Canvas(int w, int h):this(0,0,w,h, ConsoleColor.White) {
-        }
-
-        public Canvas(int x, int y, int w, int h, ConsoleColor col) : base(x, y, w, h) {
-            this.Color = col;
-            this.Points=Allocation();
+        public Canvas(int w, int h):base(0,0,w,h) {
+            this.Color = ConsoleColor.White;
+            this.Points = Allocation();
         }
         /// <summary>
         /// Позиционируем все точки, рисуем "Стакан"
