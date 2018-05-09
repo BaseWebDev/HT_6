@@ -14,13 +14,13 @@ namespace SimpleInterface {
         public Heap(int x, int y, int w, int h) : base(x, y, w, h) {
             Points = new List<Point>();
         }
-        public int DeleteLine {get;set;}
+        public int DelLine {get;set;}
+
         /// <summary>
         /// Добавляем фигуры в наш стакан
         /// с преобразованием
         /// </summary>
-        /// <param name="figure">сами фигуры</param>
-       
+        /// <param name="figure">сами фигуры</param>  
         public void Add(IFigure figure) {
             Points.AddRange(figure.Points);
         }
@@ -30,11 +30,11 @@ namespace SimpleInterface {
         }
 
         public void Remove(int line) {
-            this.DeleteLine = line;
+            this.DelLine = line;
             this.Points.RemoveAll(WholeLine);
         }
         private bool WholeLine(Point point) {
-            return point.Y == DeleteLine;
+            return point.Y == DelLine;
         }
         public void MoveDown(int line) {
             foreach (var point in Points) {
@@ -42,6 +42,31 @@ namespace SimpleInterface {
                     ++point.Y;
                 }
             }
+        }
+
+        public int DeleteLine() {
+            int countDeleteLine = 0;
+            Points.Sort(); // Сортируем по Y
+            int countY = 0;
+            int lastY = -1;
+            List<int> deleteLines = new List<int>();
+            foreach (var point in Points) {
+                if (point.Y == lastY || lastY == -1) {
+                    ++countY;
+                } else {
+                    countY = 1;
+                }
+                if (countY == Width) {
+                    deleteLines.Add(point.Y);
+                }
+                lastY = point.Y;
+            }
+            foreach (var line in deleteLines) { // Делаем так чтоб не использовать IEnumerable<Point> вызывает ошибку
+                Remove(line);
+                MoveDown(line);
+                ++countDeleteLine;
+            }
+            return countDeleteLine;
         }
 
         public override void Draw(IRender render) {

@@ -66,7 +66,7 @@ namespace SimpleInterface
                     TimeFrame = maxTimeFrame;
                     Clear();
                     figure.Draw(this);
-                    if (!DownMove(figure)) {
+                    if (!figure.DownMove(canvas,heap)) {
                         heap.Add(figure);
                         break;
                     }                  
@@ -76,19 +76,19 @@ namespace SimpleInterface
                                 TimeFrame = minTimeFrame;
                                 break;
                             case ConsoleKey.UpArrow:
-                                figure.CountTurn++;
+                                figure.Turn(canvas, heap);  // Поворот фигуры по часовой стрелке
                                 break;
                             case ConsoleKey.RightArrow:
-                                RightMove(figure);
+                                figure.RightMove(canvas, heap);  //  Движение фигуры вправо
                                 break;
                             case ConsoleKey.LeftArrow:
-                                LeftMove(figure);
+                                figure.LeftMove(canvas, heap);  //  Движение фигуры влево
                                 break;
                         }                       
                     }
                     canvas.Draw(this);  // Рисуем "Стакан"
+                    CountDeleteLine+=heap.DeleteLine(); // Увеличиваем счет, если есть заполненая линия
                     heap.Draw(this);    // Рисуем "Кучу" внизу
-                    DeleteLine();
                     ScoreDraw();
                     Wait();                   
                     this.Frame++;
@@ -111,112 +111,7 @@ namespace SimpleInterface
                 Console.ForegroundColor = point.Color;
                 Console.Write("■");
             }
-        }
-        /// <summary>
-        /// Поворот фигуры по часовой стрелке
-        /// </summary>
-        private void Turn(IFigure figure) {
-            foreach (var point in canvas) {
-                foreach (var pointFig in figure) {
-                    if (pointFig.X + figure.Height == point.X & pointFig.Y == point.Y) {
-                        return;
-                    }
-                }
-            }
-            foreach (var point in heap) {
-                foreach (var pointFig in figure) {
-                    if (pointFig.X + figure.Height == point.X & pointFig.Y == point.Y) {
-                        return;
-                    }
-                }
-            }
-            figure.CountTurn++;
-        }
-        /// <summary>
-        /// Движение фигуры вниз с постоянной скоростью
-        /// </summary>
-        private bool DownMove(IFigure figure) {
-            foreach (var point in canvas) {
-                foreach (var pointFig in figure) {
-                    if (pointFig.X == point.X & pointFig.Y+1 == point.Y) {
-                        return false;
-                    }
-                }
-            }
-            foreach (var point in heap) {
-                foreach (var pointFig in figure) {
-                    if (pointFig.X == point.X & pointFig.Y+1 == point.Y) {
-                        return false;
-                    }
-                }
-            }
-            ++figure.Y;
-            return true;
-        }
-        /// <summary>
-        /// Движение фигуры вправо
-        /// </summary>
-        private void RightMove(IFigure figure) {
-            foreach (var point in canvas) {
-                foreach (var pointFig in figure) {
-                    if (pointFig.X + 1 == point.X & pointFig.Y == point.Y) {
-                        return;
-                    }
-                }
-            }
-            foreach (var point in heap) {
-                foreach (var pointFig in figure) {
-                    if (pointFig.X + 1 == point.X & pointFig.Y == point.Y) {
-                        return;
-                    }
-                }
-            }
-            ++figure.X;
-        }
-        /// <summary>
-        /// Движение фигуры влево
-        /// </summary>
-        private void LeftMove(IFigure figure) {
-            foreach (var point in canvas) {
-                foreach (var pointFig in figure) {
-                    if (pointFig.X - 1 == point.X & pointFig.Y == point.Y) {
-                        return;
-                    }
-                }
-            }
-            foreach (var point in heap) {
-                foreach (var pointFig in figure) {
-                    if (pointFig.X - 1 == point.X & pointFig.Y == point.Y) {
-                        return;
-                    }
-                }
-            }
-            --figure.X;
-        }
-        private void DeleteLine() {
-            heap.Sort(); // Сортируем по Y
-            int countY = 0;
-            int lastY = -1;
-            List<int> deleteLines = new List<int>();
-            foreach (var point in heap) {
-                if (point.Y == lastY || lastY == -1) {
-                    ++countY;
-                } else {
-                    countY=1;
-                }               
-                if (countY == WidthField) {
-                    deleteLines.Add(point.Y);
-                }
-                lastY = point.Y;
-            }
-            foreach (var line in deleteLines) { // Делаем так чтоб не использовать IEnumerable<Point> вызывает ошибку
-                heap.Remove(line);
-                heap.MoveDown(line);
-                ++CountDeleteLine;
-            }
-            heap.Draw(this);
-
-        }
+        }     
         private void ScoreDraw (){
             Console.SetCursorPosition(scoreX, scoreY);
             Console.ForegroundColor = ConsoleColor.White;

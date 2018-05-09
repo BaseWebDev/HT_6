@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace SimpleInterface {
-    interface IFigure: IEnumerable<Point> {
+    interface IFigure : IEnumerable<Point> {
         int X { get; set; }
         int Y { get; set; }
         /// <summary>
@@ -18,5 +18,9 @@ namespace SimpleInterface {
         /// </summary>
         int CountTurn { get; set; }
         void Draw(IRender render);
-    }
+        void Turn(Canvas canvas, Heap heap);
+        bool DownMove(Canvas canvas, Heap heap);
+        void RightMove(Canvas canvas, Heap heap);
+        void LeftMove(Canvas canvas, Heap heap);
+    }   
 }

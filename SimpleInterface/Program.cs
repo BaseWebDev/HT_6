@@ -26,7 +26,7 @@ namespace SimpleInterface {
             var Figures = new List<IFigure>();
             int middleField = widthField / 2;
             for (int i = 0; i < maxFigure; i++) {
-                Figures.Add(new FactoryFigure(middleField, minY, consoleColor[random.Next(0,consoleColor.Length-1)], nameFigure[random.Next(0, nameFigure.Length-1)]));
+                Figures.Add(new FactoryFigure(middleField, minY, consoleColor[random.Next(0,consoleColor.Length)], nameFigure[random.Next(0, nameFigure.Length)]));
             }
             var engine = new Render(widthField,heightField);
             Console.WriteLine("\tМиниТетрис");
