@@ -50,7 +50,7 @@ namespace SimpleInterface {
             int countY = 0;
             int lastY = -1;
             List<int> deleteLines = new List<int>();          
-            foreach (var point in Points.ToArray()) {
+            foreach (var point in Points.ToArray()) {  // Правда м.б косяки в связи с удалением нескольких линий 
                 if (point.Y == lastY || lastY == -1) {
                     ++countY;
                 } else {

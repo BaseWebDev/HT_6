@@ -32,7 +32,11 @@ namespace SimpleInterface {
                 }
             }
             this.CountTurn++;
+            SetPoints();
         }
+
+        internal abstract void SetPoints();
+
         /// <summary>
         /// Движение фигуры вниз с постоянной скоростью
         /// </summary>
@@ -52,6 +56,7 @@ namespace SimpleInterface {
                 }
             }
             ++this.Y;
+            SetPoints();
             return true;
         }
         /// <summary>
@@ -73,6 +78,7 @@ namespace SimpleInterface {
                 }
             }
             ++this.X;
+            SetPoints();
         }
         /// <summary>
         /// Движение фигуры влево
@@ -93,6 +99,7 @@ namespace SimpleInterface {
                 }
             }
             --this.X;
+            SetPoints();
         }
 
         public IEnumerator<Point> GetEnumerator() {

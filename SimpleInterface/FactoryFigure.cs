@@ -14,7 +14,7 @@ namespace SimpleInterface
             this.Points = new List<Point>();
             SetPoints();
         }
-        private void SetPoints() {
+        internal override void SetPoints() {
             this.Points.Clear();
             switch (TypeFigure) {
                 case "T":
@@ -42,7 +42,6 @@ namespace SimpleInterface
         }
 
         public override void Draw(IRender render) {
-            SetPoints();
             render.SetPixel(this.Points);
         }
 
