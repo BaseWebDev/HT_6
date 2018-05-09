@@ -25,10 +25,6 @@ namespace SimpleInterface {
             Points.AddRange(figure.Points);
         }       
 
-        public void Remove(int line) {
-            this.DelLine = line;
-            this.Points.RemoveAll(WholeLine);
-        }
         private bool WholeLine(Point point) {
             return point.Y == DelLine;
         }
@@ -46,14 +42,15 @@ namespace SimpleInterface {
             int countY = 0;
             int lastY = -1;
             List<int> deleteLines = new List<int>();          
-            foreach (var point in Points.ToArray()) {  // Правда м.б косяки в связи с удалением нескольких линий 
+            foreach (var point in Points.ToArray()) {  // Правда м.б косяки в связи с удалением нескольких линий  
                 if (point.Y == lastY || lastY == -1) {
                     ++countY;
                 } else {
                     countY = 1;
                 }
                 if (countY == Width) {
-                    Remove(point.Y);
+                    DelLine = point.Y;
+                    Points.RemoveAll(WholeLine);
                     MoveDown(point.Y);
                     ++countDeleteLine;
                 }
