@@ -49,22 +49,19 @@ namespace SimpleInterface {
             Points.Sort(); // Сортируем по Y
             int countY = 0;
             int lastY = -1;
-            List<int> deleteLines = new List<int>();
-            foreach (var point in Points) {
+            List<int> deleteLines = new List<int>();          
+            foreach (var point in Points.ToArray()) {
                 if (point.Y == lastY || lastY == -1) {
                     ++countY;
                 } else {
                     countY = 1;
                 }
                 if (countY == Width) {
-                    deleteLines.Add(point.Y);
+                    Remove(point.Y);
+                    MoveDown(point.Y);
+                    ++countDeleteLine;
                 }
                 lastY = point.Y;
-            }
-            foreach (var line in deleteLines) { // Делаем так чтоб не использовать IEnumerable<Point> вызывает ошибку
-                Remove(line);
-                MoveDown(line);
-                ++countDeleteLine;
             }
             return countDeleteLine;
         }
