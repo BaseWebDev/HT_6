@@ -23,11 +23,7 @@ namespace SimpleInterface {
         /// <param name="figure">сами фигуры</param>  
         public void Add(IFigure figure) {
             Points.AddRange(figure.Points);
-        }
-
-        public void Sort() {
-            Points.Sort();
-        }
+        }       
 
         public void Remove(int line) {
             this.DelLine = line;
